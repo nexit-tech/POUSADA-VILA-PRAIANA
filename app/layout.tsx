@@ -27,7 +27,22 @@ const allura = Allura({
 export const metadata: Metadata = {
     title: 'Pousada Vila Praiana · Arraial do Cabo',
     description:
-        'Pousada Vila Praiana — refúgio boutique à beira-mar em Arraial do Cabo. Reserve sua experiência diretamente conosco com o melhor preço garantido.',
+        'Pousada no coração de Arraial do Cabo, a 10 minutos a pé das três praias mais lindas — Prainha, Praia Grande e Praia dos Anjos. Café da manhã incluso e localização privilegiada.',
+    icons: {
+        icon: [
+            { url: '/logo.png', type: 'image/png' },
+        ],
+        apple: '/logo.png',
+    },
+    openGraph: {
+        title: 'Pousada Vila Praiana · Arraial do Cabo',
+        description: 'Sua pousada no coração de Arraial do Cabo — a passos das três praias mais lindas.',
+        url: 'https://pousadavilapraiana.com.br',
+        siteName: 'Pousada Vila Praiana',
+        locale: 'pt_BR',
+        type: 'website',
+        images: [{ url: '/logo.png', width: 800, height: 800 }],
+    },
 };
 
 export const viewport: Viewport = {

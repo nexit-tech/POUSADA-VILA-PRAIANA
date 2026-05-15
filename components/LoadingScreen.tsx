@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function LoadingScreen() {
     const [hide,    setHide]    = useState(false);
     const [unmount, setUnmount] = useState(false);
 
     useEffect(() => {
-        // Trava o scroll enquanto o loading está visível
         document.documentElement.style.overflow = 'hidden';
 
         const t1 = setTimeout(() => setHide(true),    1700);
@@ -27,8 +27,14 @@ export default function LoadingScreen() {
     return (
         <div className={`loading-screen${hide ? ' is-hidden' : ''}`} aria-hidden="true">
             <div className="loading-inner">
-                <span className="loading-mark">POUSADA</span>
-                <span className="loading-script">Vila Praiana</span>
+                <Image
+                    src="/logo.png"
+                    alt="Pousada Vila Praiana"
+                    width={320}
+                    height={320}
+                    priority
+                    className="loading-logo"
+                />
                 <span className="loading-line" />
                 <span className="loading-tag">Arraial do Cabo</span>
             </div>

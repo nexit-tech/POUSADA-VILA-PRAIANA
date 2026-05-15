@@ -1,10 +1,19 @@
 'use client';
 
+import Image from 'next/image';
 import type { IconType } from 'react-icons';
 import { LuSailboat, LuSunset, LuFish, LuUtensilsCrossed } from 'react-icons/lu';
 import { useLang } from '@/lib/LanguageContext';
 
 const icons: IconType[] = [LuSailboat, LuSunset, LuFish, LuUtensilsCrossed];
+
+const R2 = 'https://pub-04503d7ce2e34ce0a79adb19dd326408.r2.dev';
+
+const beaches = [
+    { name: 'Prainha',         src: `${R2}/prainha.png`     },
+    { name: 'Praia dos Anjos', src: `${R2}/anjos.png`       },
+    { name: 'Praia Grande',    src: `${R2}/praia-grande.jpg`},
+];
 
 export default function Arraial() {
     const { t } = useLang();
@@ -22,19 +31,19 @@ export default function Arraial() {
                     <p className="lead light">{t.arraial.lead}</p>
                     <a href="#contato" className="btn-outline-light">{t.arraial.cta}</a>
                 </div>
+
                 <div className="arraial-imgs">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
-                        alt="Arraial do Cabo"
-                        className="ai-1"
-                    />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=700&q=80"
-                        alt="Sunset"
-                        className="ai-2"
-                    />
+                    {beaches.map((b, i) => (
+                        <div className={`beach-img beach-${i + 1}`} key={b.name}>
+                            <Image
+                                src={b.src}
+                                alt={b.name}
+                                fill
+                                sizes="(max-width: 980px) 100vw, 30vw"
+                            />
+                            <span className="beach-label">{b.name}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
 

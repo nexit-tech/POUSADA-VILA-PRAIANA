@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/LanguageContext';
+import { bookingUrl } from '@/lib/links';
 
 export default function CtaFinal() {
     const { t } = useLang();
@@ -15,7 +16,14 @@ export default function CtaFinal() {
                 <ul className="cta-perks">
                     {t.cta.perks.map((p, i) => <li key={i}>{p}</li>)}
                 </ul>
-                <a href="#reservar" className="btn-primary large">{t.cta.reserve}</a>
+                <a
+                    href={bookingUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary large"
+                >
+                    {t.cta.reserve}
+                </a>
             </div>
         </section>
     );

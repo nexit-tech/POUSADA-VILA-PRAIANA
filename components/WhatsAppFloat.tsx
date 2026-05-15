@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { useLang } from '@/lib/LanguageContext';
+import { CONTACT } from '@/lib/links';
 
 type Theme = 'cream' | 'sand' | 'navy';
 
@@ -38,7 +39,7 @@ export default function WhatsAppFloat() {
 
     return (
         <a
-            href={`https://wa.me/5522999999999?text=${text}`}
+            href={`https://wa.me/${CONTACT.phone}?text=${text}`}
             className={`wa-float theme-${theme}`}
             target="_blank"
             rel="noopener noreferrer"

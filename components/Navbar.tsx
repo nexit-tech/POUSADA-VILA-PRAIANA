@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import LanguageToggle from './LanguageToggle';
 import { useLang } from '@/lib/LanguageContext';
+import { bookingUrl } from '@/lib/links';
 
 type Theme = 'cream' | 'sand' | 'navy';
 
@@ -63,9 +65,15 @@ export default function Navbar() {
     return (
         <header className={navClass}>
             <div className="nav-inner">
-                <a href="#" className="brand" onClick={closeMenu}>
-                    <span className="brand-mark">POUSADA</span>
-                    <span className="brand-script">Vila Praiana</span>
+                <a href="#" className="brand" onClick={closeMenu} aria-label="Pousada Vila Praiana">
+                    <Image
+                        src="/logo.png"
+                        alt="Pousada Vila Praiana"
+                        width={220}
+                        height={220}
+                        priority
+                        className="brand-logo"
+                    />
                 </a>
 
                 <nav className={`nav-links${menuOpen ? ' open' : ''}`} aria-label="Navigation">
@@ -78,7 +86,13 @@ export default function Navbar() {
                     {/* Rodapé do menu mobile — visível só quando aberto em telas pequenas */}
                     <div className="nav-links-foot">
                         <LanguageToggle />
-                        <a href="#reservar" className="btn-primary" onClick={closeMenu}>
+                        <a
+                            href={bookingUrl()}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary"
+                            onClick={closeMenu}
+                        >
                             {t.hero.reserve}
                         </a>
                     </div>
@@ -86,7 +100,14 @@ export default function Navbar() {
 
                 <div className="nav-side">
                     <LanguageToggle />
-                    <a href="#reservar" className="btn-reserve-top">{t.nav.reserve}</a>
+                    <a
+                        href={bookingUrl()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-reserve-top"
+                    >
+                        {t.nav.reserve}
+                    </a>
                 </div>
 
                 <button

@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
 import { LuMinus, LuPlus, LuChevronDown, LuCalendar, LuUsers } from 'react-icons/lu';
 import { useLang } from '@/lib/LanguageContext';
+import { bookingUrl } from '@/lib/links';
 
 type Popover = 'dates' | 'guests' | null;
 
@@ -49,10 +50,12 @@ export default function BookingWidget() {
     })();
 
     const handleBook = () => {
-        const ci = range?.from ? format(range.from, 'dd/MM/yyyy') : '';
-        const co = range?.to   ? format(range.to,   'dd/MM/yyyy') : '';
-        const text = `${t.whatsapp.bookingIntro}\n${t.whatsapp.bookingCheckin}: ${ci}\n${t.whatsapp.bookingCheckout}: ${co}\n${t.whatsapp.bookingGuests}: ${guestsLabel}`;
-        window.open(`https://wa.me/5522999999999?text=${encodeURIComponent(text)}`, '_blank');
+        const url = bookingUrl({
+            checkin:  range?.from ? format(range.from, 'yyyy-MM-dd') : undefined,
+            checkout: range?.to   ? format(range.to,   'yyyy-MM-dd') : undefined,
+            guests:   adults + children,
+        });
+        window.open(url, '_blank', 'noopener,noreferrer');
     };
 
     const toggle = (which: Popover) => setOpen(curr => (curr === which ? null : which));

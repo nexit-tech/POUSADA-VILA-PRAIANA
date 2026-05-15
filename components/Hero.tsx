@@ -1,7 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import BookingWidget from './BookingWidget';
 import { useLang } from '@/lib/LanguageContext';
+import { bookingUrl } from '@/lib/links';
 
 export default function Hero() {
     const { t } = useLang();
@@ -9,18 +11,14 @@ export default function Hero() {
     return (
         <section className="hero" data-nav-theme="navy">
             <div className="hero-media">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80"
-                >
-                    <source
-                        src="https://cdn.coverr.co/videos/coverr-aerial-view-of-a-tropical-beach-3633/1080p.mp4"
-                        type="video/mp4"
-                    />
-                </video>
+                <Image
+                    src="https://pub-04503d7ce2e34ce0a79adb19dd326408.r2.dev/capa.png"
+                    alt="Pousada Vila Praiana — Arraial do Cabo"
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="hero-img"
+                />
                 <div className="hero-overlay" />
             </div>
 
@@ -34,7 +32,14 @@ export default function Hero() {
                 <p className="hero-sub">{t.hero.sub}</p>
 
                 <div className="hero-actions">
-                    <a href="#reservar"    className="btn-primary">{t.hero.reserve}</a>
+                    <a
+                        href={bookingUrl()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                    >
+                        {t.hero.reserve}
+                    </a>
                     <a href="#experiencia" className="btn-ghost">{t.hero.discover}</a>
                 </div>
             </div>

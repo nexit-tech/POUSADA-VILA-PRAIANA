@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/LanguageContext';
+import { CONTACT } from '@/lib/links';
 
 export default function Contact() {
     const { t } = useLang();
@@ -14,8 +15,8 @@ export default function Contact() {
                     <address>
                         {t.contact.street}<br />
                         {t.contact.neighborhood}<br /><br />
-                        <a href="tel:+5522999999999">+55 (22) 99999-9999</a><br />
-                        <a href="mailto:reservas@vilapraiana.com.br">reservas@vilapraiana.com.br</a>
+                        <a href={`tel:+${CONTACT.phone}`}>{CONTACT.phoneFmt}</a><br />
+                        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
                     </address>
                 </div>
 
@@ -23,7 +24,7 @@ export default function Contact() {
                     <span className="map-pin">{t.contact.pin}</span>
 
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3681.5!2d-42.025!3d-22.966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDU3JzU3LjYiUyA0MsKwMDEnMzAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+                        src="https://maps.google.com/maps?q=Pra%C3%A7a%20da%20Independ%C3%AAncia%2C%2018%20-%20Centro%2C%20Arraial%20do%20Cabo%20-%20RJ%2C%2028930-000&t=&z=16&ie=UTF8&iwloc=&output=embed"
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
                         allowFullScreen
@@ -32,7 +33,7 @@ export default function Contact() {
 
                     <a
                         className="map-cta"
-                        href="https://www.google.com/maps/search/?api=1&query=Arraial+do+Cabo+RJ"
+                        href="https://www.google.com/maps/dir/?api=1&destination=Pra%C3%A7a+da+Independ%C3%AAncia%2C+18+-+Centro%2C+Arraial+do+Cabo+-+RJ%2C+28930-000"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
