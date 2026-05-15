@@ -207,17 +207,10 @@ button { font-family: inherit; }
     transition: background 0.5s var(--ease);
 }
 
-.nav-links.open {
-    display: flex;
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    flex-direction: column;
-    padding: 24px 32px;
-    background: rgba(250, 247, 240, 0.98);
-    backdrop-filter: blur(10px);
-    gap: 18px;
+/* Rodapé do menu mobile (idioma + reserve) */
+.nav-links-foot {
+    display: none;
 }
-.nav-links.open a { color: var(--c-navy); }
 
 /* ============== HERO ============== */
 .hero {
@@ -1313,62 +1306,256 @@ button { font-family: inherit; }
 }
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 
-/* ============== RESPONSIVE ============== */
-@media (max-width: 980px) {
-    .nav-links:not(.open) { display: none; }
-    .nav-toggle  { display: flex; }
-    .btn-reserve-top { display: none; }
+/* =================================================
+   RESPONSIVE — Mobile-first beautified
+   ================================================= */
 
-    .features              { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .suites-grid           { grid-template-columns: 1fr; gap: 28px; }
+/* ----------- Tablet (≤980px) ----------- */
+@media (max-width: 980px) {
+    /* Navbar: hamburger aparece, links e nav-side somem (vão para o menu mobile) */
+    .nav-links:not(.open)   { display: none; }
+    .nav-toggle             { display: flex; }
+    .nav-side               { display: none; }
+
+    /* Navbar — quando o menu está aberto, força tema claro pra contraste */
+    .navbar.menu-open {
+        --nav-fg: var(--c-navy);
+        background: rgba(250, 247, 240, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 16px 0;
+    }
+
+    /* Hamburger → X morph */
+    .nav-toggle span {
+        transform-origin: center;
+        transition: transform 0.35s var(--ease), opacity 0.2s var(--ease), background 0.3s var(--ease);
+    }
+    .nav-toggle.is-open span                 { background: var(--c-navy); }
+    .nav-toggle.is-open span:nth-child(1)    { transform: translateY(6px)  rotate(45deg); }
+    .nav-toggle.is-open span:nth-child(2)    { opacity: 0; }
+    .nav-toggle.is-open span:nth-child(3)    { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Menu mobile — full screen overlay com slide-down */
+    .nav-links.open {
+        display: flex;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 100vh;
+        height: 100dvh;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 110px 32px 48px;
+        background: rgba(250, 247, 240, 0.98);
+        backdrop-filter: blur(24px);
+        z-index: 95;
+        animation: navSlide 0.4s var(--ease) both;
+    }
+    @keyframes navSlide {
+        from { transform: translateY(-20px); opacity: 0; }
+        to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    .nav-links.open a {
+        width: 100%;
+        color: var(--c-navy);
+        font-family: var(--f-serif), serif;
+        font-size: 1.8rem;
+        font-weight: 500;
+        letter-spacing: 0;
+        text-transform: none;
+        padding: 18px 0;
+        border-bottom: 1px solid rgba(11, 42, 74, 0.1);
+        opacity: 0;
+        transform: translateY(14px);
+        animation: linkReveal 0.5s var(--ease) forwards;
+    }
+    .nav-links.open a::after { display: none; }
+    .nav-links.open a:nth-child(1) { animation-delay: 0.15s; }
+    .nav-links.open a:nth-child(2) { animation-delay: 0.22s; }
+    .nav-links.open a:nth-child(3) { animation-delay: 0.29s; }
+    .nav-links.open a:nth-child(4) { animation-delay: 0.36s; }
+    .nav-links.open a:nth-child(5) { animation-delay: 0.43s; }
+    @keyframes linkReveal {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Rodapé do menu mobile (idioma + Reservar) */
+    .nav-links-foot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        width: 100%;
+        margin-top: auto;
+        padding-top: 32px;
+        opacity: 0;
+        animation: linkReveal 0.6s var(--ease) 0.55s forwards;
+    }
+    .nav-links-foot .lang-toggle {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+    }
+    .nav-links-foot .lang-toggle button { padding: 8px 6px; }
+    .nav-links-foot .btn-primary {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.82rem;
+    }
+
+    /* Grids gerais */
+    .features              { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .suites-grid           { grid-template-columns: 1fr; gap: 32px; max-width: 480px; }
     .arraial-grid          { grid-template-columns: 1fr; gap: 60px; }
     .arraial-imgs          { height: 420px; }
     .experiences           { grid-template-columns: repeat(2, 1fr); }
     .exp-card              { border-right: none; border-bottom: 1px solid rgba(250,247,240,0.15); }
     .exp-card:nth-child(2) { border-right: none; }
-    .testimonials          { grid-template-columns: 1fr; gap: 80px; }
+    .testimonials          { grid-template-columns: 1fr; gap: 80px; max-width: 600px; }
     .contact-grid          { grid-template-columns: 1fr; gap: 50px; }
     .footer-inner          { grid-template-columns: 1fr; gap: 50px; }
     .footer-cols           { grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
+    .section               { padding: 110px 0; }
+    .section-intro         { padding-top: 220px; }
+    .section-arraial       { padding: 110px 0; }
+    .experiences           { margin-top: 80px; }
+    .cta-perks             { gap: 16px; font-size: 0.85rem; }
+
+    /* Booking widget — empilha tudo */
     .booking-widget {
         flex-direction: column;
-        bottom: -140px;
+        bottom: -150px;
         gap: 0;
-        padding: 20px;
+        padding: 18px;
+        width: calc(100% - 40px);
     }
-    .bw-divider { width: 100%; height: 1px; }
-    .bw-cta { padding: 18px; margin-top: 8px; }
-
+    .bw-divider     { width: 100%; height: 1px; }
+    .bw-cta         { padding: 18px; margin-top: 10px; border-radius: 6px; }
     .bw-popover-dates,
     .bw-popover-guests {
-        left: 14px; right: 14px;
+        left: 0; right: 0;
         width: auto;
+        max-height: 75vh;
+        overflow-y: auto;
     }
-    .rdp-months { gap: 0; flex-direction: column; }
+    .rdp-months     { gap: 0; flex-direction: column; }
+    .rdp            { --rdp-cell-size: 38px; }
 
-    .nav-side       { gap: 14px; }
-    .lang-toggle    { display: none; }
-
+    /* FAQ */
     .faq-q          { font-size: 1rem; gap: 16px; }
     .faq-a > p      { padding-right: 0; }
-
-    .section            { padding: 110px 0; }
-    .section-intro      { padding-top: 220px; }
-    .section-arraial    { padding: 110px 0; }
-    .experiences        { margin-top: 80px; }
-    .cta-perks { gap: 16px; font-size: 0.85rem; }
 }
 
-@media (max-width: 540px) {
+/* ----------- Phone (≤640px) ----------- */
+@media (max-width: 640px) {
     .nav-inner       { padding: 0 20px; }
     .container       { padding: 0 20px; }
-    .features        { grid-template-columns: 1fr; }
-    .experiences     { grid-template-columns: 1fr; }
-    .footer-cols     { grid-template-columns: 1fr; }
-    .hero-actions    { flex-direction: column; align-items: stretch; }
-    .btn-primary, .btn-ghost { padding: 16px 32px; }
 
-    .booking-widget  { bottom: -160px; width: calc(100% - 32px); }
-    .section-intro   { padding-top: 260px; }
+    .navbar          { padding: 18px 0; }
+    .brand-mark      { font-size: 0.95rem; letter-spacing: 0.28em; }
+    .brand-script    { font-size: 1.4rem; }
+
+    /* Hero */
+    .hero            { min-height: 100dvh; }
+    .hero-title      { font-size: clamp(2.2rem, 11vw, 3.2rem) !important; }
+    .hero-sub        { font-size: 1.02rem; margin-top: 18px; }
+    .hero-eyebrow    { font-size: 0.66rem; letter-spacing: 0.32em; }
+    .hero-actions    { margin-top: 32px; flex-direction: column; align-items: stretch; gap: 12px; }
+    .hero-actions a  { width: 100%; text-align: center; padding: 16px 24px; }
+    .hero-scroll     { display: none; }
+
+    /* Booking widget no celular */
+    .booking-widget  { bottom: -200px; padding: 14px; }
+    .bw-field        { padding: 12px 16px; }
+    .bw-label        { font-size: 0.6rem; letter-spacing: 0.2em; }
+    .bw-value        { font-size: 1rem; }
+    .bw-cta          { padding: 16px; font-size: 0.72rem; letter-spacing: 0.22em; }
+
+    /* Empilha check-in e check-out (estavam side-by-side dentro do group) */
+    .bw-group-dates  { flex-direction: column; }
+    .bw-group-dates .bw-divider { width: 100%; height: 1px; }
+
+    /* Popover guests menor */
+    .bw-popover         { padding: 18px; }
+    .bw-stepper         { padding: 14px 0; }
+    .bw-stepper-info strong { font-size: 1rem; }
+
+    /* Section spacing */
+    .section            { padding: 80px 0; }
+    .section-intro      { padding-top: 320px; }
+    .section-arraial    { padding: 90px 0; }
+    .section-testimonials { padding: 90px 0; }
+    .section-faq        { padding: 90px 0; }
+    .section-cta        { padding: 100px 24px; }
+    .section-contact    { padding: 90px 0; }
+    .experiences        { margin-top: 60px; }
+
+    /* Grids 1 coluna no celular */
+    .features        { grid-template-columns: 1fr; gap: 8px; }
+    .feature         { padding: 24px 0; }
+    .experiences     { grid-template-columns: 1fr; }
+    .footer-cols     { grid-template-columns: 1fr; gap: 32px; }
+
+    /* Suites */
+    .suite-body      { padding: 28px 24px 32px; }
+    .suite-body h3   { font-size: 1.5rem; }
+    .suite-desc      { min-height: 0; }
+    .suite-meta      { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+    /* Arraial imgs reorganizadas */
+    .arraial-imgs    { height: 360px; }
+    .ai-1            { width: 80%; height: 280px; }
+    .ai-2            { width: 60%; height: 220px; border-width: 6px; }
+
+    /* Map pin + cta menores */
+    .map-pin         { top: 16px; left: 16px; padding: 8px 12px 8px 10px; font-size: 0.62rem; }
+    .map-cta         { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 0.62rem; letter-spacing: 0.2em; }
+    .map-wrapper     { border-radius: 18px; padding: 8px; }
+    .map-wrapper iframe { border-radius: 12px; }
+
+    /* Contact */
+    .contact-grid address { font-size: 1rem; line-height: 1.85; }
+
+    /* CTA final */
+    .cta-perks       { flex-direction: column; gap: 10px; margin: 32px 0; }
+    .btn-primary.large { padding: 18px 36px; font-size: 0.78rem; }
+
+    /* FAQ */
+    .faq-q           { font-size: 0.98rem; padding: 22px 4px; }
+    .faq-icon        { width: 28px; height: 28px; }
+    .faq-icon svg    { width: 12px; height: 12px; }
+    .faq-a > p       { font-size: 0.98rem; line-height: 1.65; }
+
+    /* Footer */
+    .footer-inner    { padding-bottom: 40px; }
+    .footer          { padding: 60px 0 24px; }
+
+    /* WhatsApp float — mais para dentro pra não cobrir conteúdo */
+    .wa-float        { width: 54px; height: 54px; bottom: 22px; right: 22px; }
+    .wa-icon         { width: 24px; height: 24px; }
+
+    /* Loading screen — menor */
+    .loading-mark    { font-size: 0.95rem; letter-spacing: 0.36em; }
+    .loading-script  { font-size: 2.8rem; }
+    .loading-tag     { font-size: 0.64rem; letter-spacing: 0.34em; }
+
+    /* Display titles mais compactos */
+    .display         { font-size: clamp(2rem, 7vw, 2.8rem); }
+    .lead            { font-size: 1rem; line-height: 1.6; }
+    .eyebrow         { font-size: 0.66rem; letter-spacing: 0.28em; }
+}
+
+/* ----------- Phone small (≤380px) ----------- */
+@media (max-width: 380px) {
+    .nav-inner       { padding: 0 16px; }
+    .container       { padding: 0 16px; }
+    .nav-links.open  { padding: 100px 24px 36px; }
+    .nav-links.open a { font-size: 1.5rem; }
+    .display         { font-size: 1.75rem; }
+    .hero-title      { font-size: 2rem !important; }
+    .booking-widget  { bottom: -210px; }
+    .section-intro   { padding-top: 340px; }
 }
