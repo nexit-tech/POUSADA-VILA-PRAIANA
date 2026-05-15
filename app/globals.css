@@ -1317,6 +1317,15 @@ button { font-family: inherit; }
     .nav-toggle             { display: flex; }
     .nav-side               { display: none; }
 
+    /* CRÍTICO: brand e toggle precisam ficar ACIMA do overlay do menu.
+       Sem isto, o .nav-links.open (z-index: 95) é pintado sobre o
+       hamburger (que herda auto = 0 dentro do contexto da navbar). */
+    .brand,
+    .nav-toggle {
+        position: relative;
+        z-index: 110;
+    }
+
     /* Navbar — quando o menu está aberto, força tema claro pra contraste */
     .navbar.menu-open {
         --nav-fg: var(--c-navy);
