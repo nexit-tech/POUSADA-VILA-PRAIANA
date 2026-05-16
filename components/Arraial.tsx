@@ -39,6 +39,8 @@ export default function Arraial() {
                                 src={b.src}
                                 alt={b.name}
                                 fill
+                                priority
+                                quality={80}
                                 sizes="(max-width: 980px) 100vw, 30vw"
                             />
                             <span className="beach-label">{b.name}</span>

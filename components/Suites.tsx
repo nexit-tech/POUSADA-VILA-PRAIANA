@@ -38,6 +38,8 @@ export default function Suites() {
                                         src={imgs.room}
                                         alt={`${s.title} — quarto`}
                                         fill
+                                        priority
+                                        quality={80}
                                         sizes="(max-width: 640px) 100vw, 30vw"
                                     />
                                 </div>
@@ -46,6 +48,8 @@ export default function Suites() {
                                         src={imgs.bathroom}
                                         alt={`${s.title} — banheiro`}
                                         fill
+                                        priority
+                                        quality={80}
                                         sizes="(max-width: 640px) 100vw, 18vw"
                                     />
                                 </div>

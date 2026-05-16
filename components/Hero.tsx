@@ -16,6 +16,8 @@ export default function Hero() {
                     alt="Pousada Vila Praiana — Arraial do Cabo"
                     fill
                     priority
+                    fetchPriority="high"
+                    quality={85}
                     sizes="100vw"
                     className="hero-img"
                 />

@@ -51,9 +51,28 @@ export const viewport: Viewport = {
     initialScale: 1,
 };
 
+const R2 = 'https://pub-04503d7ce2e34ce0a79adb19dd326408.r2.dev';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="pt-BR" className={`${cormorant.variable} ${inter.variable} ${allura.variable}`}>
+            <head>
+                {/* Conecta antecipadamente ao CDN das imagens — economiza DNS + TLS handshake */}
+                <link rel="preconnect"   href={R2} crossOrigin="anonymous" />
+                <link rel="dns-prefetch" href={R2} />
+
+                {/* Pré-conecta também aos domínios secundários ainda usados (Unsplash p/ fotos do CTA bg) */}
+                <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
+                {/* Pré-carrega a imagem do hero — começa a baixar logo após HTML, em paralelo com JS/CSS */}
+                <link
+                    rel="preload"
+                    as="image"
+                    href={`${R2}/capa.png`}
+                    /* @ts-expect-error fetchpriority é HTML attr novo, JSX aceita */
+                    fetchpriority="high"
+                />
+            </head>
             <body>
                 <LanguageProvider>{children}</LanguageProvider>
             </body>
